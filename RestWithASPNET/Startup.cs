@@ -7,10 +7,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RestWithASPNET.Models.Context;
+using RestWithASPNET.Services;
+using RestWithASPNET.Services.Implementation;
 
 namespace RestWithASPNET
 {
@@ -28,6 +32,13 @@ namespace RestWithASPNET
         {
 
             services.AddControllers();
+
+            var connection = Configuration["MySQLConnection:MySQLConnectionString"];
+
+            // Dependency injection
+            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNET", Version = "v1" });
