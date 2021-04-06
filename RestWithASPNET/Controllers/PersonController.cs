@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace RestWithASPNET.Controllers
 {
-    [Route("api/[controller]")]
-
+    [ApiVersion("1")]
     [ApiController]
+    [Route("v{version:apiVersion}/api/[controller]")]
+
     public class PersonController : ControllerBase
     {
         private IPersonService _personService;
