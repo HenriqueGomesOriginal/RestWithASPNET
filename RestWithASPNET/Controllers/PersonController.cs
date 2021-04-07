@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Models;
-using RestWithASPNET.Services;
+using RestWithASPNET.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +16,25 @@ namespace RestWithASPNET.Controllers
 
     public class PersonController : ControllerBase
     {
-        private IPersonService _personService;
+        private IPersonRepository _personRepository;
 
         private readonly ILogger<PersonController> _logger;
-        public PersonController(ILogger<PersonController> logger, IPersonService personService)
+        public PersonController(ILogger<PersonController> logger, IPersonRepository personRepository)
         {
             _logger = logger;
-            _personService = personService;
+            _personRepository = personRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_personService.FindAll());
+            return Ok(_personRepository.FindAll());
         }
 
         [HttpGet ("{id}")]
         public IActionResult Get(string id)
         {
-            var person = _personService.FindById(id);
+            var person = _personRepository.FindById(id);
             if (person != null)
                 return Ok(person);
             else
@@ -45,7 +45,7 @@ namespace RestWithASPNET.Controllers
         public IActionResult Post([FromBody] Person person)
         {
             if (person != null)
-                return Ok(_personService.Create(person));
+                return Ok(_personRepository.Create(person));
             else
                 return BadRequest("Nullable object");
         }
@@ -54,7 +54,7 @@ namespace RestWithASPNET.Controllers
         public IActionResult Put([FromBody] Person person)
         {
             if (person != null)
-                return Ok(_personService.Update(person));
+                return Ok(_personRepository.Update(person));
             else
                 return BadRequest("Nullable object");
         }
@@ -62,7 +62,7 @@ namespace RestWithASPNET.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            var person = _personService.Delete(id);
+            var person = _personRepository.Delete(id);
             if (person != null)
                 return NoContent();
             else

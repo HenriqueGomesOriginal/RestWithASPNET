@@ -13,16 +13,26 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RestWithASPNET.Models.Context;
-using RestWithASPNET.Services;
-using RestWithASPNET.Services.Implementation;
+using RestWithASPNET.Repository;
+using RestWithASPNET.Repository.Implementation;
+using Serilog;
+using RestWithASPNET.Business;
+using RestWithASPNET.Business.Implementation;
 
 namespace RestWithASPNET
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IWebHostEnvironment Environment { get;  }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -39,7 +49,8 @@ namespace RestWithASPNET
             services.AddApiVersioning();
 
             // Dependency injection
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
 
             services.AddSwaggerGen(c =>

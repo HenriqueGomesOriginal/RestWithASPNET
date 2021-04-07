@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestWithASPNET.Services.Implementation
+namespace RestWithASPNET.Repository.Implementation
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private MySqlContext _context;
 
-        public PersonServiceImplementation(MySqlContext context)
+        public PersonRepositoryImplementation(MySqlContext context)
         {
             _context = context;
         }
@@ -55,19 +55,6 @@ namespace RestWithASPNET.Services.Implementation
         {
             return _context.Persons.ToList();
         }
-
-        private Person MockPerson()
-        {
-            return new Person
-            {
-                Id = System.Guid.NewGuid().ToString(),
-                Name = "Henrique",
-                LastName = "Gomes",
-                Address = "Rio de Janeiro",
-                Gender = "Male"
-            };
-        }
-
         public Person FindById(string id)
         {
             if (!Exists(id)) return new Person();
@@ -78,7 +65,7 @@ namespace RestWithASPNET.Services.Implementation
 
         public Person Update(Person person)
         {
-            if (!Exists(person.Id)) return new Person();
+            if (!Exists(person.Id)) return null;
             var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(person.Id));
 
             if (result != null)
@@ -96,7 +83,7 @@ namespace RestWithASPNET.Services.Implementation
             return person;
         }
 
-        private bool Exists(string id)
+        public bool Exists(string id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }
