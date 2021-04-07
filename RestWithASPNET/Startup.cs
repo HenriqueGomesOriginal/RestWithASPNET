@@ -57,6 +57,10 @@ namespace RestWithASPNET
             // Dependency injection
             services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+
+            services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
+            services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
+
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
 
             services.AddSwaggerGen(c =>
