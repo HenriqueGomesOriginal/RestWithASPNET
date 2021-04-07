@@ -45,6 +45,12 @@ namespace RestWithASPNET
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
 
+            // Migrating
+            if (Environment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
+
             // Version control
             services.AddApiVersioning();
 
@@ -79,6 +85,25 @@ namespace RestWithASPNET
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void MigrateDatabase(string connection)
+        {
+            try
+            {
+                var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
+                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+                {
+                    Locations = new List<string> { "db/migrations", "db/dataset" },
+                    IsEraseDisabled = true
+                };
+                evolve.Migrate();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Database migration failed ", e);
+                throw;
+            }
         }
     }
 }
