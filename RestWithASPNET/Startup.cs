@@ -1,21 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RestWithASPNET.Models.Context;
 using RestWithASPNET.Repository;
-using RestWithASPNET.Repository.Implementation;
 using Serilog;
+using RestWithASPNET.Repository.Generic;
+using RestWithASPNET.Repository.Implementation;
 using RestWithASPNET.Business;
 using RestWithASPNET.Business.Implementation;
 
@@ -55,11 +51,13 @@ namespace RestWithASPNET
             services.AddApiVersioning();
 
             // Dependency injection
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+            //services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 
-            services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
+            //services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
 

@@ -9,9 +9,9 @@ namespace RestWithASPNET.Business.Implementation
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private IPersonRepository _personRepository;
+        private IRepository<Person> _personRepository;
 
-        public PersonBusinessImplementation(IPersonRepository personRepository)
+        public PersonBusinessImplementation(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
         }

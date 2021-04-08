@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RestWithASPNET.Business;
 using RestWithASPNET.Models;
-using RestWithASPNET.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASPNET.Controllers
 {
@@ -16,10 +11,10 @@ namespace RestWithASPNET.Controllers
 
     public class PersonController : ControllerBase
     {
-        private IPersonRepository _personRepository;
+        private IPersonBusiness _personRepository;
 
         private readonly ILogger<PersonController> _logger;
-        public PersonController(ILogger<PersonController> logger, IPersonRepository personRepository)
+        public PersonController(ILogger<PersonController> logger, IPersonBusiness personRepository)
         {
             _logger = logger;
             _personRepository = personRepository;

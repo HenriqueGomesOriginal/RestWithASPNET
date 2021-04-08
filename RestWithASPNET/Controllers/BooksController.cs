@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RestWithASPNET.Business;
+using RestWithASPNET.Business.Implementation;
 using RestWithASPNET.Models;
-using RestWithASPNET.Repository.Implementation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASPNET.Controllers
 {
@@ -15,10 +12,10 @@ namespace RestWithASPNET.Controllers
 
     public class BooksController : ControllerBase
     {
-        private IBooksRepository _booksRepository;
+        private IBooksBusiness _booksRepository;
 
-        private readonly ILogger<PersonController> _logger;
-        public BooksController(ILogger<PersonController> logger, IBooksRepository booksRepository)
+        private readonly ILogger<BooksController> _logger;
+        public BooksController(ILogger<BooksController> logger, IBooksBusiness booksRepository)
         {
             _logger = logger;
             _booksRepository = booksRepository;
