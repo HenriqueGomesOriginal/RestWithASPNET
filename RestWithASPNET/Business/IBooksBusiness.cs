@@ -1,14 +1,14 @@
-﻿using RestWithASPNET.Models;
+﻿using RestWithASPNET.Data.VO;
 using System.Collections.Generic;
 
 namespace RestWithASPNET.Business
 {
     public interface IBooksBusiness
     {
-        Books Create(Books books);
-        Books FindById(string id);
-        List<Books> FindAll();
-        Books Update(Books books);
-        Books Delete(string id);
+        BooksVO Create(BooksVO books);
+        BooksVO FindById(string id);
+        List<BooksVO> FindAll();
+        BooksVO Update(BooksVO books);
+        BooksVO Delete(string id);
     }
 }

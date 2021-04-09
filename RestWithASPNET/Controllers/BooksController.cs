@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Business;
-using RestWithASPNET.Business.Implementation;
-using RestWithASPNET.Models;
+using RestWithASPNET.Data.VO;
 
 namespace RestWithASPNET.Controllers
 {
@@ -38,7 +37,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Books books)
+        public IActionResult Post([FromBody] BooksVO books)
         {
             if (books != null)
                 return Ok(_booksRepository.Create(books));
@@ -47,7 +46,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Books books)
+        public IActionResult Put([FromBody] BooksVO books)
         {
             if (books != null)
                 return Ok(_booksRepository.Update(books));

@@ -1,45 +1,47 @@
-﻿using RestWithASPNET.Models;
+﻿using RestWithASPNET.Data.Converter.Implementation;
+using RestWithASPNET.Data.VO;
+using RestWithASPNET.Models;
 using RestWithASPNET.Repository;
-using RestWithASPNET.Repository.Implementation;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASPNET.Business.Implementation
 {
     public class BooksBusinessImplementation : IBooksBusiness
     {
         private IRepository<Books> _booksRepository;
+        private BooksConverter _converter;
 
         public BooksBusinessImplementation(IRepository<Books> booksRepository)
         {
             _booksRepository = booksRepository;
+            _converter = new BooksConverter();
         }
 
-        public Books Create(Books books)
+        public BooksVO Create(BooksVO books)
         {
-            return _booksRepository.Create(books);
+            var booksEntity = _converter.Parse(books);
+            return _converter.Parse(_booksRepository.Create(booksEntity));
         }
 
-        public Books Delete(string id)
+        public BooksVO Delete(string id)
         {
-            return _booksRepository.Delete(id);
+            return _converter.Parse(_booksRepository.Delete(id));
         }
 
-        public List<Books> FindAll()
+        public List<BooksVO> FindAll()
         {
-            return _booksRepository.FindAll();
+            return _converter.Parse(_booksRepository.FindAll());
         }
 
-        public Books FindById(string id)
+        public BooksVO FindById(string id)
         {
-            return _booksRepository.FindById(id);
+            return _converter.Parse(_booksRepository.FindById(id));
         }
 
-        public Books Update(Books books)
+        public BooksVO Update(BooksVO books)
         {
-            return _booksRepository.Update(books);
+            var booksEntity = _converter.Parse(books);
+            return _converter.Parse(_booksRepository.Update(booksEntity));
         }
     }
 }
