@@ -15,6 +15,8 @@ using RestWithASPNET.Repository.Implementation;
 using RestWithASPNET.Business;
 using RestWithASPNET.Business.Implementation;
 using Microsoft.Net.Http.Headers;
+using RestWithASPNET.Hypermedia.Enricher;
+using RestWithASPNET.Hypermedia.Filters;
 
 namespace RestWithASPNET
 {
@@ -47,6 +49,12 @@ namespace RestWithASPNET
             {
                 MigrateDatabase(connection);
             }
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BooksEnricher());
+
+            services.AddSingleton(filterOptions);
 
             // Media Type
             services.AddMvc(options =>
@@ -97,6 +105,7 @@ namespace RestWithASPNET
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 

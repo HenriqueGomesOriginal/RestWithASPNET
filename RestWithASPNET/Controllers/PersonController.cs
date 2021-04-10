@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
+using RestWithASPNET.Hypermedia.Filters;
 
 namespace RestWithASPNET.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("v{version:apiVersion}/api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
 
     public class PersonController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personRepository.FindAll());
@@ -37,6 +39,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person != null)
@@ -46,6 +49,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person != null)
@@ -55,6 +59,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(string id)
         {
             var person = _personRepository.Delete(id);

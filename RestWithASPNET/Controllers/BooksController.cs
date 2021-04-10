@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
+using RestWithASPNET.Hypermedia.Filters;
 
 namespace RestWithASPNET.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("v{version:apiVersion}/api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
 
     public class BooksController : ControllerBase
     {
@@ -21,12 +22,14 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_booksRepository.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(string id)
         {
             var person = _booksRepository.FindById(id);
@@ -37,6 +40,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BooksVO books)
         {
             if (books != null)
@@ -46,6 +50,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BooksVO books)
         {
             if (books != null)
@@ -55,6 +60,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(string id)
         {
             var person = _booksRepository.Delete(id);
