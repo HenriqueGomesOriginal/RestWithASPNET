@@ -11,12 +11,12 @@ using RestWithASPNET.Models.Context;
 using RestWithASPNET.Repository;
 using Serilog;
 using RestWithASPNET.Repository.Generic;
-using RestWithASPNET.Repository.Implementation;
 using RestWithASPNET.Business;
 using RestWithASPNET.Business.Implementation;
 using Microsoft.Net.Http.Headers;
 using RestWithASPNET.Hypermedia.Enricher;
 using RestWithASPNET.Hypermedia.Filters;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestWithASPNET
 {
@@ -79,11 +79,24 @@ namespace RestWithASPNET
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
-
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNET", Version = "v1" });
-            });
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "RestWithASPNET",
+                        Version = "v1",
+                        Description = "RESTfull API developed in ASP.NET 5",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Henrique Gomes",
+                            Url = new Uri("https://github.com/HenriqueGomesOriginal"),
+                            Email = "henriquegomesoriginal@gmail.com"
+                        }
+                    });
+            }); 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,9 +105,14 @@ namespace RestWithASPNET
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestWithASPNET v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestWithASPNET v1"));
+
+            var options = new RewriteOptions();
+            options.AddRedirect("ˆ$", "swagger");
+            app.UseRewriter(options);
 
             app.UseHttpsRedirection();
 

@@ -11,3 +11,4 @@ Using:
   - Content negociation
   - Custom serialization
   - Swagger
+  - HATEOAS

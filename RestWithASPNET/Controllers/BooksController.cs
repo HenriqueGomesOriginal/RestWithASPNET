@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
@@ -22,6 +23,10 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<BooksVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -29,6 +34,10 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(BooksVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(string id)
         {
@@ -40,6 +49,9 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(BooksVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BooksVO books)
         {
@@ -50,6 +62,9 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(BooksVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BooksVO books)
         {
@@ -60,6 +75,9 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(string id)
         {
