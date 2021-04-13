@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RestWithASPNET.Models.Context;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using RestWithASPNET.Repository;
 using Serilog;
 using RestWithASPNET.Repository.Generic;
@@ -26,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace RestWithASPNET
 {
@@ -117,12 +119,16 @@ namespace RestWithASPNET
             // Version control
             services.AddApiVersioning();
 
+
             // Dependency injection
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
             services.AddScoped<IUserRepository, UserRepositoryImplementation>();
+            services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
             services.AddTransient<ITokenService, TokenImplementation>();
 
