@@ -20,5 +20,6 @@
     <Folder Include="Configurations\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Implementations\" />
+    <Folder Include="Hypermedia\Utils\" />
   </ItemGroup>
 </Project>

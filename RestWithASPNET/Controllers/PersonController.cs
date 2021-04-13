@@ -24,6 +24,20 @@ namespace RestWithASPNET.Controllers
             _personRepository = personRepository;
         }
 
+        [HttpGet("FindWithPagedSearch/{sortDirection}/{pageSize}/{page}")]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get([FromQuery] string name,
+            string sortDirection,
+            int pageSize,
+            int page)
+        {
+            return Ok(_personRepository.FindWithPagedSearch(name, sortDirection, pageSize, page));
+        }
+
         [HttpGet]
         [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
         [ProducesResponseType(204)]
@@ -33,7 +47,7 @@ namespace RestWithASPNET.Controllers
         public IActionResult Get()
         {
             return Ok(_personRepository.FindAll());
-        }       
+        }
 
         [HttpGet ("{id}")]
         [ProducesResponseType((200), Type = typeof(PersonVO))]

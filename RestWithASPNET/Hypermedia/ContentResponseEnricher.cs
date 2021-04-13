@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using RestWithASPNET.Hypermedia.Abstract;
+using RestWithASPNET.Hypermedia.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace RestWithASPNET.Hypermedia
         }
         public virtual bool CanEnrich(Type contentType)
         {
-            return contentType == typeof(Template) || contentType == typeof(List<Template>);
+            return contentType == typeof(Template) || contentType == typeof(List<Template>) || contentType == typeof(PagedSearchVO<Template>);
         }
 
         protected abstract Task EnrichModel(Template content, IUrlHelper urlHelper);
@@ -43,6 +44,13 @@ namespace RestWithASPNET.Hypermedia
                 {
                     ConcurrentBag<Template> bag = new ConcurrentBag<Template>(collection);
                     Parallel.ForEach(bag, (element) =>
+                    {
+                        EnrichModel(element, urlHelper);
+                    });
+                }
+                else if (okObjectResult.Value is PagedSearchVO<Template> pagedSearch)
+                {
+                    Parallel.ForEach(pagedSearch.List, (element) =>
                     {
                         EnrichModel(element, urlHelper);
                     });
