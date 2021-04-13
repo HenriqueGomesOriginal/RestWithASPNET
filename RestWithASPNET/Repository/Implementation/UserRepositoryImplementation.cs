@@ -24,6 +24,21 @@ namespace RestWithASPNET.Repository.Implementation
             return userRet;
         }
 
+        public User ValidateCredentials(string userName)
+        {
+            User userRet = _context.Users.SingleOrDefault(u => (u.UserName == userName));
+            return userRet;
+        }
+
+        public bool RevokeToken(string userName)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.UserName.Equals(userName));
+            if (user == null) return false;
+            user.RefreshToken = null;
+            _context.SaveChanges();
+            return true;
+        }
+
         private object ComputeHash(string input, SHA256CryptoServiceProvider algotithm)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
@@ -29,6 +30,28 @@ namespace RestWithASPNET.Controllers
             var token = _business.ValidateCredentials(user);
             if (token == null) return Unauthorized();
             return Ok(token);
+        }
+
+        [HttpPost]
+        [Route("refresh")]
+        public IActionResult Refresh([FromBody] TokenVO tokenVO)
+        {
+            if (tokenVO == null) return BadRequest("Nullable user");
+            var token = _business.ValidateCredentials(tokenVO);
+            if (token == null) return Unauthorized();
+            return Ok(token);
+        }
+
+
+        [HttpGet]
+        [Route("logout")]
+        [Authorize("Bearer")]
+        public IActionResult Logout()
+        {
+            var userName = User.Identity.Name;
+            bool result = _business.RevokeToken(userName);
+            if (result != true) return BadRequest("Invalid client!");
+            return NoContent();
         }
     }
 }

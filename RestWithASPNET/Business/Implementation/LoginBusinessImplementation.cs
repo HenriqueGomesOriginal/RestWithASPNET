@@ -57,5 +57,49 @@ namespace RestWithASPNET.Business.Implementation
                 refreshToken
             );
         }
+
+        public TokenVO ValidateCredentials(TokenVO token)
+        {
+            var accessToken = token.AccessToken;
+            var refreshToken = token.RefreshToken;
+
+            var principal = _service.GetPrincipalFromExpiryToken(accessToken);
+            var userName = principal.Identity.Name;
+            var user = _repository.ValidateCredentials(userName);
+
+            if (user != null ||
+                user.RefreshToken != refreshToken ||
+                user.RefreshTokenExpiryTime <= DateTime.Now) return null;
+
+            accessToken = _service.GenerateAccessToken(principal.Claims);
+            refreshToken = _service.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_configuration.DaysToExpiry);
+
+            DateTime createDate = DateTime.Now;
+            DateTime expirationDate = createDate.AddMinutes(_configuration.Minutes);
+
+            var auxUser = new UserVO();
+            auxUser.Password = user.Password;
+            auxUser.UserName = user.UserName;
+
+            _repository.ValidateCredentials(auxUser);
+
+            return new TokenVO(
+                true,
+                createDate.ToString(DATE_FORMAT),
+                expirationDate.ToString(DATE_FORMAT),
+                accessToken,
+                refreshToken
+            );
+        }
+
+        public bool RevokeToken(string userName)
+        {
+            var result = _repository.RevokeToken(userName);
+            if (result != true) return false;
+            return true;
+        }
     }
 }
