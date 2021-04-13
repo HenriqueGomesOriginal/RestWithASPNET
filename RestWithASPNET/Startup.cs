@@ -95,11 +95,12 @@ namespace RestWithASPNET
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
 
             // Migrating
+            /*
             if (Environment.IsDevelopment())
             {
                 MigrateDatabase(connection);
             }
-
+            */
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
             filterOptions.ContentResponseEnricherList.Add(new BooksEnricher());

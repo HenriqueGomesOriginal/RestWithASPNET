@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>394920f2-130b-4019-907d-a69200b83885</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +24,6 @@
     <Folder Include="Services\Implementations\" />
     <Folder Include="Hypermedia\Utils\" />
     <Folder Include="UploadDir\" />
+    <Folder Include="ci\" />
   </ItemGroup>
 </Project>

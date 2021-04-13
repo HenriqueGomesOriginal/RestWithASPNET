@@ -5,6 +5,8 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWithASPNET", "RestWithASPNET\RestWithASPNET.csproj", "{472E2E64-280B-4757-BA39-F54AE844FC21}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1F48BE99-10E6-4482-9FCC-379BECF16071}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{472E2E64-280B-4757-BA39-F54AE844FC21}.Release|x64.Build.0 = Release|Any CPU
 		{472E2E64-280B-4757-BA39-F54AE844FC21}.Release|x86.ActiveCfg = Release|Any CPU
 		{472E2E64-280B-4757-BA39-F54AE844FC21}.Release|x86.Build.0 = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|x64.Build.0 = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|x64.Build.0 = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F48BE99-10E6-4482-9FCC-379BECF16071}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
