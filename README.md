@@ -12,3 +12,10 @@ Using:
   - Custom serialization
   - Swagger
   - HATEOAS
+  - CORS
+  - Authenticação
+  - File manager
+  - Docker
+  - Travis CI
+
+[![Build Status](https://travis-ci.com/HenriqueGomesOriginal/RestWithASPNET.svg?branch=main)](https://travis-ci.com/HenriqueGomesOriginal/RestWithASPNET)
