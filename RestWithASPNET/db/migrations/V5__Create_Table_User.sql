@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `books`;
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
 	`id` VARCHAR(255) NOT NULL,

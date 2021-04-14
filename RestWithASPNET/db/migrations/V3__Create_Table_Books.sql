@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `books` (
-  `id` varchar(255) NOT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  `launch_date` datetime DEFAULT NULL,
-  `price` float DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `id` VARCHAR(255) NOT NULL,
+  `author` VARCHAR(255) DEFAULT NULL,
+  `launch_date` DATETIME DEFAULT NULL,
+  `price` FLOAT DEFAULT NULL,
+  `title` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
