@@ -46,7 +46,7 @@ namespace RestWithASPNET.Business.Implementation
             var size = (pageSize < 1) ? 1 : pageSize;
 
             string query = @"select * from person p where p.name like '%"
-                + name + "%' order by p.name asc limit " + pageSize +
+                + name + "%' order by p.name " + sort + " limit " + pageSize +
                 " offset " + currentPage;
 
             string countQuery = @"select count(*) from person p";

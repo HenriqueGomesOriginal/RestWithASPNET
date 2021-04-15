@@ -35,6 +35,21 @@ namespace RestWithASPNET.Controllers
             return Ok(_booksRepository.FindAll());
         }
 
+        [HttpGet("FindWithPagedSearch/{sortDirection}/{pageSize}/{page}")]
+        [ProducesResponseType((200), Type = typeof(List<BooksVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get([FromQuery] string title,
+            string sortDirection,
+            int pageSize,
+            int page)
+        {
+            return Ok(_booksRepository.FindWithPagedSearch(title, sortDirection, pageSize, page));
+        }
+
+
         [HttpGet("{id}")]
         [ProducesResponseType((200), Type = typeof(BooksVO))]
         [ProducesResponseType(204)]

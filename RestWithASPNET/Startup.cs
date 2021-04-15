@@ -95,12 +95,13 @@ namespace RestWithASPNET
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
 
             // Migrating
-            /*
+            // if using docker for local database comment migrations
+
             if (Environment.IsDevelopment())
             {
                 MigrateDatabase(connection);
             }
-            */
+            
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
             filterOptions.ContentResponseEnricherList.Add(new BooksEnricher());
@@ -165,10 +166,6 @@ namespace RestWithASPNET
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestWithASPNET v1"));
 
-            var options = new RewriteOptions();
-            options.AddRedirect("ˆ$", "swagger");
-            app.UseRewriter(options);
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -176,6 +173,10 @@ namespace RestWithASPNET
             app.UseCors();
 
             app.UseAuthorization();
+
+            var options = new RewriteOptions();
+            options.AddRedirect("ˆ$", "swagger");
+            app.UseRewriter(options);
 
             app.UseEndpoints(endpoints =>
             {

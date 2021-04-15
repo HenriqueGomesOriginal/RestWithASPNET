@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +20,10 @@ namespace RestWithASPNET.Business.Implementation
         public byte[] GetFile(string filename)
         {
             var filePath = _basePath + "/" + filename;
-            return File.ReadAllBytes(filePath);
+
+            // If isn't docker put filePath in place of filename
+
+            return File.ReadAllBytes(filename);
         }
 
         public async Task<FileDetailVO> SaveFileToDisk(IFormFile file)
@@ -41,7 +43,9 @@ namespace RestWithASPNET.Business.Implementation
                     fileDetail.DocType = fileType;
                     fileDetail.DocUrl = Path.Combine(baseUrl + "/api/file/v1/" + fileDetail.DocumentName);
 
-                    using var stream = new FileStream(destination, FileMode.Create);
+                    // If isn't docker put destination in place of docName
+
+                    using var stream = new FileStream(docName, FileMode.Create);
                     await file.CopyToAsync(stream);
                 }
             }
