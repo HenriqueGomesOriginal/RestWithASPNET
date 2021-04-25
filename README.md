@@ -18,4 +18,7 @@ Using:
   - Docker
   - Travis CI
 
+Release in Azure
+  https://hav4.azurewebsites.net/swagger/index.html
+
 [![Build Status](https://travis-ci.com/HenriqueGomesOriginal/RestWithASPNET.svg?branch=main)](https://travis-ci.com/HenriqueGomesOriginal/RestWithASPNET)
